@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Registracija{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h4 mb-3">Registracija</h2>
+        <form method="post">{% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-success w-100">Kreiraj račun</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

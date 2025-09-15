@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Prijava{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h4 mb-3">Prijava</h2>
+        <form method="post">{% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-primary w-100">Prijavi se</button>
+        </form>
+        <p class="mt-3 mb-0 text-center">
+          Nemaš račun? <a href="{% url 'register' %}">Registriraj se</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

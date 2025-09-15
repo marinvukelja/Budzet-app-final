@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="h4 mb-3">Računi</h2>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="h6">Dodaj račun</h3>
+    <form method="post">{% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-success">Spremi</button>
+    </form>
+  </div>
+</div>
+
+<div class="card mt-4 shadow-sm">
+  <div class="card-body">
+    <h3 class="h6">Moji računi</h3>
+    <div class="row g-3">
+      {% for racun in items %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-0 bg-light">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h5 class="card-title mb-1">{{ racun.naziv }}</h5>
+                  <small class="text-muted">{{ racun.get_tip_display }}</small>
+                </div>
+                <span class="badge {% if racun.aktivno %}bg-success{% else %}bg-secondary{% endif %}">
+                  {% if racun.aktivno %}Aktivan{% else %}Neaktivan{% endif %}
+                </span>
+              </div>
+              <div class="mt-3">
+                <div class="d-flex justify-content-between">
+                  <span class="text-muted">Trenutno stanje:</span>
+                  <strong class="{% if racun.trenutno_stanje >= 0 %}text-success{% else %}text-danger{% endif %}">
+                    {{ racun.trenutno_stanje }} €
+                  </strong>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="text-muted">Početno stanje:</span>
+                  <span>{{ racun.pocetno_stanje }} €</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">
+          <p class="text-muted">Nema računa — dodaj prvi račun.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

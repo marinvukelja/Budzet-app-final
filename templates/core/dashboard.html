@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="h4 mb-3">Pregled ({{ current_month }}/{{ current_year }})</h2>
+
+<!-- Glavne statistike -->
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card shadow-sm border-0">
+      <div class="card-body text-center">
+        <h5 class="text-success mb-1">{{ prihodi }} €</h5>
+        <small class="text-muted">Prihodi</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm border-0">
+      <div class="card-body text-center">
+        <h5 class="text-danger mb-1">{{ troskovi }} €</h5>
+        <small class="text-muted">Troškovi</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm border-0">
+      <div class="card-body text-center">
+        <h5 class="{% if stanje >= 0 %}text-success{% else %}text-danger{% endif %} mb-1">{{ stanje }} €</h5>
+        <small class="text-muted">Stanje</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card shadow-sm border-0">
+      <div class="card-body text-center">
+        <h5 class="text-primary mb-1">{{ total_account_balance }} €</h5>
+        <small class="text-muted">Ukupno na računima</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Budžet pregled -->
+{% if budget_summary %}
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card shadow-sm border-0 bg-light">
+      <div class="card-body text-center">
+        <h5 class="text-primary mb-1">{{ total_budget }} €</h5>
+        <small class="text-muted">Ukupni budžet</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm border-0 bg-light">
+      <div class="card-body text-center">
+        <h5 class="text-warning mb-1">{{ total_spent }} €</h5>
+        <small class="text-muted">Potrošeno</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm border-0 bg-light">
+      <div class="card-body text-center">
+        <h5 class="{% if over_budget_count > 0 %}text-danger{% else %}text-success{% endif %} mb-1">{{ over_budget_count }}</h5>
+        <small class="text-muted">Prekoračeni budžeti</small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="h6">Troškovi po kategorijama</h3>
+        <canvas id="pie"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="h6">Prihodi vs Troškovi (12 mj.)</h3>
+        <canvas id="bar"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Budžet pregled -->
+{% if budget_summary %}
+<h3 class="h5 mt-4">Budžet pregled ({{ current_month }}/{{ current_year }})</h3>
+<div class="row g-3 mb-4">
+  {% for data in budget_summary %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <h6 class="mb-0">{{ data.budget.kategorija.naziv }}</h6>
+            <span class="badge 
+              {% if data.status == 'over' %}bg-danger
+              {% elif data.status == 'warning' %}bg-warning
+              {% else %}bg-success{% endif %} badge-sm">
+              {% if data.status == 'over' %}Prekoračen
+              {% elif data.status == 'warning' %}Upozorenje
+              {% else %}U redu{% endif %}
+            </span>
+          </div>
+          <div class="progress mb-2" style="height: 8px;">
+            <div class="progress-bar 
+              {% if data.percentage > 100 %}bg-danger
+              {% elif data.percentage > 80 %}bg-warning
+              {% else %}bg-success{% endif %}" 
+              role="progressbar" 
+              style="width: {{ data.percentage }}%">
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <small class="text-muted">{{ data.actual }} / {{ data.budget.iznos }} €</small>
+            <small class="{% if data.remaining < 0 %}text-danger{% else %}text-success{% endif %}">
+              {{ data.remaining }} €
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Računi -->
+{% if racuni %}
+<h3 class="h5 mt-4">Računi</h3>
+<div class="row g-3 mb-4">
+  {% for racun in racuni %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="mb-1">{{ racun.naziv }}</h6>
+              <small class="text-muted">{{ racun.get_tip_display }}</small>
+            </div>
+            <span class="badge bg-success badge-sm">Aktivan</span>
+          </div>
+          <div class="mt-2">
+            <h5 class="{% if racun.trenutno_stanje >= 0 %}text-success{% else %}text-danger{% endif %} mb-0">
+              {{ racun.trenutno_stanje }} €
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Ciljevi štednje -->
+<h3 class="h5 mt-4">Ciljevi štednje</h3>
+<div class="row g-3">
+  {% for c in ciljevi %}
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <strong>{{ c.naziv }}</strong>
+            <span>{{ c.trenutno_stanje }} / {{ c.cilj_iznos }}</span>
+          </div>
+          <div class="progress mt-2" style="height:10px;">
+            <div class="progress-bar" role="progressbar" style="width: {{ c.progress }}%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <p>Nema ciljeva — dodaj prvi na <a href="{% url 'ciljevi' %}">Ciljevima</a>.</p>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Brze akcije -->
+<div class="row g-3 mt-4">
+  <div class="col-md-3">
+    <a href="{% url 'budget_analysis' %}" class="btn btn-outline-primary w-100">
+      📊 Analiza budžeta
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="{% url 'ponavljajuce' %}" class="btn btn-outline-success w-100">
+      ⚡ Ponavljajuće ({{ recurring_count }})
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="{% url 'racuni' %}" class="btn btn-outline-info w-100">
+      💳 Računi
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="{% url 'budzeti' %}" class="btn btn-outline-warning w-100">
+      📋 Budžeti
+    </a>
+  </div>
+</div>
+
+<!-- Obrađivanje ponavljajućih transakcija -->
+<div class="row g-3 mt-3">
+  <div class="col-12">
+    <div class="alert alert-info d-flex justify-content-between align-items-center">
+      <div>
+        <strong>💡 Savjet:</strong> Pokrenite obradu ponavljajućih transakcija da ažurirate podatke
+      </div>
+      <a href="{% url 'process_recurring' %}" class="btn btn-primary btn-sm">
+        🔄 Obrađi ponavljajuće
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const pieCtx = document.getElementById('pie').getContext('2d');
+  new Chart(pieCtx, {
+    type: 'pie',
+    data: { labels: {{ pie_labels|safe }}, datasets: [{ data: {{ pie_values|safe }} }] },
+    options: { responsive: true }
+  });
+
+  const barCtx = document.getElementById('bar').getContext('2d');
+  new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: {{ bar_labels|safe }},
+      datasets: [
+        { label: 'Prihodi', data: {{ bar_prihodi|safe }} },
+        { label: 'Troškovi', data: {{ bar_troskovi|safe }} }
+      ]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+  });
+</script>
+{% endblock %}
