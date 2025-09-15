@@ -20,12 +20,6 @@ Osnovne mogucnosti
 
 Pokretanje
 
-#1. Preuzimanje projekta
-Preuzmite projekt na svoje računalo i otvorite CMD u direktoriju projekta.
-
-#2. Instalacija Pythona
-Potrebna je verzija **Python 3.10+**.  
-
 #3. Kreiranje virtualnog okruženja
 cd Desktop\budzet-projekt
 py -m venv .venv
@@ -51,7 +45,14 @@ Unesesete korisničko ime, email i lozinku.
 #7. Pokretanje servera
 py manage.py runserver
 
-#8. Otvaranje u browseru
+#8. Kreiranje demo podataka (opcionalno)
+py manage.py create_demo_data
+
+Ova komanda kreira demo korisnika s podacima za testiranje:
+- **Username:** demo
+- **Password:** demo123
+
+#9. Otvaranje u browseru
 Otvorite u pregledniku:  
 http://127.0.0.1:8000/
 
