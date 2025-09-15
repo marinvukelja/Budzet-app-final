@@ -33,7 +33,7 @@
             <tr>
               <td>{{ transakcija.opis }}</td>
               <td>{{ transakcija.kategorija.naziv }}</td>
-              <td>{{ transakcija.iznos }} €</td>
+              <td>{{ transakcija.iznos|floatformat:2 }} €</td>
               <td>{{ transakcija.get_frekvencija_display }}</td>
               <td>{{ transakcija.sljedeci_datum }}</td>
               <td>

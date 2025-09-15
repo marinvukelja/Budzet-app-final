@@ -33,12 +33,12 @@
                 <div class="d-flex justify-content-between">
                   <span class="text-muted">Trenutno stanje:</span>
                   <strong class="{% if racun.trenutno_stanje >= 0 %}text-success{% else %}text-danger{% endif %}">
-                    {{ racun.trenutno_stanje }} €
+                    {{ racun.trenutno_stanje|floatformat:2 }} €
                   </strong>
                 </div>
                 <div class="d-flex justify-content-between">
                   <span class="text-muted">Početno stanje:</span>
-                  <span>{{ racun.pocetno_stanje }} €</span>
+                  <span>{{ racun.pocetno_stanje|floatformat:2 }} €</span>
                 </div>
               </div>
             </div>

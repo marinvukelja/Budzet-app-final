@@ -9,6 +9,7 @@ def update_goal_on_save(sender, instance: Transakcija, created, **kwargs):
         cilj = instance.doprinos_cilju
         cilj.trenutno_stanje += delta
         cilj.save()
+        print(f"Signal: Ažuriran cilj {cilj.naziv} za {delta}€, novo stanje: {cilj.trenutno_stanje}€")
 
 @receiver(pre_save, sender=Transakcija)
 def handle_update(sender, instance: Transakcija, **kwargs):

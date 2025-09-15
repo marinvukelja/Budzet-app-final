@@ -22,12 +22,18 @@
             {% for c in items %}
               <tr>
                 <td>{{ c.naziv }}</td>
-                <td>{{ c.cilj_iznos }}</td>
-                <td>{{ c.trenutno_stanje }}</td>
+                <td>{{ c.cilj_iznos|floatformat:2 }}</td>
+                <td>{{ c.trenutno_stanje|floatformat:2 }}</td>
                 <td>
-                  <div class="progress" style="height:10px;">
-                    <div class="progress-bar" role="progressbar" style="width: {{ c.progress }}%"></div>
+                  <div class="progress" style="height: 10px; background-color: #e9ecef; border: 1px solid #dee2e6;">
+                    <div class="progress-bar" role="progressbar" 
+                         style="width: {{ c.progress }}%; background-color: #007bff; border: none; height: 100%;" 
+                         aria-valuenow="{{ c.progress }}" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100">
+                    </div>
                   </div>
+                  <small class="text-muted">{{ c.progress|floatformat:1 }}%</small>
                 </td>
               </tr>
             {% empty %}<tr><td colspan="4">Nema ciljeva.</td></tr>{% endfor %}

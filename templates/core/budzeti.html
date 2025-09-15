@@ -33,10 +33,10 @@
             <tr>
               <td>{{ budzet.kategorija.naziv }}</td>
               <td>{{ budzet }}</td>
-              <td>{{ budzet.iznos }} €</td>
-              <td>{{ budzet.get_actual_spending }} €</td>
+              <td>{{ budzet.iznos|floatformat:2 }} €</td>
+              <td>{{ budzet.get_actual_spending|floatformat:2 }} €</td>
               <td class="{% if budzet.get_remaining_budget < 0 %}text-danger{% else %}text-success{% endif %}">
-                {{ budzet.get_remaining_budget }} €
+                {{ budzet.get_remaining_budget|floatformat:2 }} €
               </td>
               <td>
                 <div class="progress" style="height: 20px;">
