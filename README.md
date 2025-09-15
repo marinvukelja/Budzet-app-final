@@ -20,6 +20,12 @@ Osnovne mogucnosti
 
 Pokretanje
 
+#1. Preuzimanje projekta
+Preuzmite projekt na svoje računalo i otvorite CMD u direktoriju projekta.
+
+#2. Instalacija Pythona
+Potrebna je verzija **Python 3.10+**.  
+
 #3. Kreiranje virtualnog okruženja
 cd Desktop\budzet-projekt
 py -m venv .venv
