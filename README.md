@@ -1,70 +1,56 @@
-# Web aplikacija za upravljanje kućnim budžetom
+# Budget Management Web Application
 
-Ova aplikacija omogućuje korisnicima praćenje prihoda i troškova, kategorizaciju transakcija te postavljanje i praćenje ciljeva štednje.
+A comprehensive Django-based web application for managing personal budgets.
 
-## Funkcionalnosti  
+## Features
 
-Osnovne mogucnosti  
-- Pracenje prihoda i troskova - Evidencija svih financijskih transakcija  
-- Kategorizacija transakcija - Organizacija troskova po kategorijama  
-- Postavljanje i pracenje ciljeva stednje - Evidencija napretka prema financijskim ciljevima  
-- Vizualizacija financijskih podataka - Interaktivni grafikoni i dijagrami  
-- Vise racuna/portfelja - Upravljanje razlicitim racunima (gotovina, banka, kreditne kartice)  
-- Upravljanje budzetom - Postavljanje mjesecnih, kvartalnih ili godisnjih budzeta po kategoriji  
-- Analiza budzet vs stvarnost - Usporedba planiranih i stvarnih troskova  
-- Ponavljajuce transakcije - Automatizacija redovitih uplata (place, racuni)  
-- Poboljsana nadzorna ploca - Sveobuhvatan pregled sa statusom budzeta  
-- Pracenje stanja racuna - Azuriranja stanja u stvarnom vremenu  
-- Upozorenja o budzetu - Vizualna upozorenja kod prekomjerne potrosnje  
+Core Functionality
+- Track income and expenses - Record all financial transactions
+- Categorize transactions - Organize spending by categories
+- Set and monitor saving goals - Track progress towards financial goals
+- Visualize financial data - Interactive charts and graphs
+- Multiple Accounts/Portfolios - Manage different accounts (cash, bank, credit cards)
+- Budget Management - Set monthly, quarterly, or yearly budgets per category
+- Budget vs Reality Analysis - Compare planned vs actual spending
+- Recurring Transactions - Automate regular payments (salaries, bills)
+- Enhanced Dashboard - Comprehensive overview with budget status
+- Account Balance Tracking - Real-time balance updates
+- Budget Alerts - Visual warnings for overspending
 
+## How to run locally
 
-Pokretanje
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/marinvukelja/budzet-projekt.git
+   cd budzet-projekt
+   ```
 
-#1. Preuzimanje projekta
-Preuzmite projekt na svoje računalo i otvorite CMD u direktoriju projekta.
-
-#2. Instalacija Pythona
-Potrebna je verzija **Python 3.10+**.  
-
-#3. Kreiranje virtualnog okruženja
-cd Desktop\budzet-projekt
-py -m venv .venv
-.venv\Scripts\activate
+2. Create and activate a virtual environment:
+   python -m venv .venv
+   .venv\Scripts\activate   # On Windows
 
 
-#4. Instalacija potrebnih paketa
-pip install -r requirements.txt
+3. Install dependencies:
+   pip install -r requirements.txt
 
-Ako `requirements.txt` ne postoji, dovoljno je:
-pip install django psycopg2-binary
+4. Apply migrations and create superuser:
+   py manage.py migrate
+   py manage.py createsuperuser
+   
 
+5. Run the development server:
+   py manage.py runserver
 
-#5. Migracije baze
-py manage.py migrate
-
-
-#6. Kreiranje administratorskog korisnika
-py manage.py createsuperuser
-
-Unesesete korisničko ime, email i lozinku.  
-
-#7. Pokretanje servera
-py manage.py runserver
-
-#8. Kreiranje demo podataka (opcionalno)
-py manage.py create_demo_data
-
-Ova komanda kreira demo korisnika s podacima za testiranje:
-- **Username:** demo
-- **Password:** demo123
-
-#9. Otvaranje u browseru
-Otvorite u pregledniku:  
-http://127.0.0.1:8000/
+Then open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
 
 
+#Usage Tips
 
- Svaki put kad otvorite novi CMD, potrebno je ponoviti:
-  1. cd Desktop\budzet-projekt  
-  2. .venv\Scripts\activate
-  3. py manage.py runserver
+1. Start with Accounts - Create your accounts first
+2. Set up Categories - Organize your spending categories
+3. Create Budgets - Set realistic budgets for each category
+4. Add Recurring Transactions - Automate regular payments
+5. Monitor Dashboard - Check your financial health regularly
+6. Use Analysis - Review budget performance monthly
+
+# budget-management-app-final
